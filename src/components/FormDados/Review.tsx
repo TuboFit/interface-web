@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { Alert, Typography } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { Alert, CircularProgress, Typography } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import { useForm } from '../../contexts/FormContext';
 import { Button } from '@mui/material';
@@ -7,16 +8,28 @@ import { Button } from '@mui/material';
 export default function Review() {
     const { state, cadastroAluno, cadastroProfessor } = useForm();
     const [error, setError] = React.useState('');
+    const [loading, setLoading] = React.useState(false);
+    const navigate = useNavigate();
 
     async function handleSubmitForm() {
+        setLoading(true)
         if (!state.professor.cref) {
-            try {
-                return await cadastroAluno(state.dadosPessoais, state.aluno)
-            } catch (e: any) {
-                return setError(e.message)
-            }
+            return await cadastroAluno(state.dadosPessoais, state.aluno)
+                .then(() => setLoading(false))
+                .catch(e => setError(e.message))
+                .finally(() => {
+                    setLoading(false)
+                    navigate("/app/alunos")
+                })
         }
         return await cadastroProfessor(state.dadosPessoais, state.professor)
+            .then(() => setLoading(false))
+            .catch(e => setError(e.message))
+            .finally(() => {
+                setLoading(false)
+                navigate("/app/professores")
+            })
+
     }
 
     return (
@@ -65,8 +78,9 @@ export default function Review() {
                 sx={{ mt: 3, ml: 1 }}
             >
                 {'Cadastrar'}
-                {error && <Alert variant="filled" severity="error">{error}</Alert>}
+                {loading && <CircularProgress size={20} sx={{ marginLeft: 1, color: "secondary.main" }} />}
             </Button>
+            {error && <Alert variant="filled" severity="error">{error}</Alert>}
 
         </React.Fragment>
     );

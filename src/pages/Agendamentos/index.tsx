@@ -52,25 +52,28 @@ export const Agendamentos = () => {
                     <Container sx={{ width: "80%" }}>
                         {agendamentos?.quant === 0 ? <p>Sem Agendamentos no momento</p> :
                             <Typography component="div">
+
                                 {agendamentos?.events.map((item, index) =>
-                                    <Accordion key={index} expanded={(expanded === 'panel' + index)} onChange={handleChange('panel' + index)}>
-                                        <AccordionSummary
-                                            expandIcon={<ExpandMoreIcon />}
-                                            aria-controls="panel1bh-content"
-                                            id="panel1bh-header"
-                                        >
-                                            <Typography sx={{ color: 'text.primary', width: '33%', flexShrink: 0 }}>
-                                                {item.nome}
-                                            </Typography>
-                                            <Typography sx={{ color: 'text.secondary' }}>{`${frendlyDate(item.data)}`}</Typography>
-                                            <Typography sx={{ color: 'text.secondary', marginLeft: '33%' }}>{`${frendlyPhone(item.telefone)}`}</Typography>
-                                        </AccordionSummary>
-                                        <AccordionDetails>
-                                            <Typography>
-                                                {item.obs}
-                                            </Typography>
-                                        </AccordionDetails>
-                                    </Accordion>
+                                    <Typography component="div" marginTop={2}>
+                                        <Accordion key={index} sx={{ alignItems: "center" }} expanded={(expanded === 'panel' + index)} onChange={handleChange('panel' + index)}>
+                                            <AccordionSummary
+                                                expandIcon={<ExpandMoreIcon />}
+                                                aria-controls="panel1bh-content"
+                                                id="panel1bh-header"
+                                            >
+                                                <Typography sx={{ color: 'text.primary', width: '33%', flexShrink: 0 }}>
+                                                    {item.nome}
+                                                </Typography>
+                                                <Typography sx={{ color: 'text.secondary' }}>{`${frendlyDate(item.data)}`}</Typography>
+                                                <Typography sx={{ color: 'text.secondary', marginLeft: '20%', marginRight: "10px", }}>{`${frendlyPhone(item.telefone)}`}</Typography>
+                                            </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Typography>
+                                                    {item.obs}
+                                                </Typography>
+                                            </AccordionDetails>
+                                        </Accordion>
+                                    </Typography>
                                 )}
 
                             </Typography>

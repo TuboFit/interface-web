@@ -25,6 +25,7 @@ type ContextType = {
     state: State;
     dispatch: (action: Action) => void
     cadastroAluno: (dadosPessoais: DadosPessoais, aluno: Aluno) => Promise<void>
+    editDados: (dadosPessoais: DadosPessoais) => Promise<void>
     cadastroProfessor: (dadosPessoais: DadosPessoais, professor: Professor) => Promise<void>
 }
 
@@ -49,6 +50,7 @@ const initialData: State = {
         }
     },
     aluno: {
+        id: '',
         altura: 0,
         idade: 0,
         genero: 0,
@@ -84,6 +86,8 @@ const formReducer = (state: State, action: Action) => {
         case FormActions.setCurrentStep:
             return { ...state, currentStep: action.payload }
         case FormActions.setDadosPessoais:
+            state.dadosPessoais.id = action.payload.id;
+            console.log(state.dadosPessoais.id)
             return { ...state, dadosPessoais: action.payload }
         case FormActions.setAluno:
             return { ...state, aluno: action.payload }
@@ -107,6 +111,12 @@ export const FormProvider = ({ children }: FormProviderProps) => {
         })
     }, [])
 
+    const editDados = useCallback(async (dados: DadosPessoais) => {
+        await turbofit_api.patch(`dados/${state.dadosPessoais?.id}`, {
+            ...dados
+        })
+    }, [state.dadosPessoais?.id])
+
     const cadastroProfessor = useCallback(async (dados: DadosPessoais, professor: Professor) => {
         await turbofit_api.post('professores', {
             ...professor,
@@ -114,7 +124,6 @@ export const FormProvider = ({ children }: FormProviderProps) => {
                 ...dados
             }
         })
-
     }, [])
 
     return (
@@ -122,6 +131,7 @@ export const FormProvider = ({ children }: FormProviderProps) => {
             state,
             dispatch,
             cadastroAluno,
+            editDados,
             cadastroProfessor
 
         }}>

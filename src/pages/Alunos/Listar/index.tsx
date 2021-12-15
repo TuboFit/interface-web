@@ -1,11 +1,10 @@
 import * as React from 'react';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { ListItens } from '../../../components/ListItens';
 import { turbofit_api } from '../../../services/turbo_fit_api';
 import { Container } from './styles'
 import { Alert, CircularProgress, Typography } from '@mui/material';
 import { Aluno } from '../../../@types/Aluno';
-
+import { FormProvider } from '../../../contexts/FormContext';
 
 export default function ListaAlunos() {
     const [loading, setLoading] = React.useState<boolean>(false);
@@ -27,11 +26,13 @@ export default function ListaAlunos() {
         handleGetData()
     }, [])// eslint-disable-next-line
     return (
-        <Container >
-            {!loading ? <ListItens itens={alunos} options={<DeleteIcon />} route='alunos' /> : <Container><CircularProgress sx={{ color: "secondary.main" }} /></Container>}
-            {error ? <Alert variant="filled" severity="error">Erro ao carregar alunos</Alert> : null}
-            {alunos?.length === 0 && <Typography>Nenhum aluno encontrado</Typography>}
-        </Container>
+        <FormProvider>
+            <Container >
+                {!loading ? <ListItens update={handleGetData} itens={alunos} route='alunos' /> : <Container><CircularProgress sx={{ color: "secondary.main" }} /></Container>}
+                {error ? <Alert variant="filled" severity="error">Erro ao carregar alunos</Alert> : null}
+                {alunos?.length === 0 && <Typography>Nenhum aluno encontrado</Typography>}
+            </Container>
+        </FormProvider>
     );
 }
 

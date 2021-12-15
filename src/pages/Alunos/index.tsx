@@ -10,14 +10,13 @@ export const Alunos = () => {
     return (
         <>
             <NavBar />
-            <Container >
+            <Container>
                 <h1>Alunos</h1>
                 <Fab color="primary" aria-label="add" onClick={() => setCadastro((oldValue) => !oldValue)}>
                     {cadastro ? <ArrowBack sx={{ color: 'secondary.main' }} /> : <AddIcon sx={{ color: 'secondary.main' }} />}
                 </Fab>
                 {cadastro && <CadastroAluno />}
                 {!cadastro && <ListaAlunos />}
-
             </Container>
         </>
     )

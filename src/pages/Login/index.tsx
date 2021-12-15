@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useAuth } from '../../contexts/AuthContext';
 import { Copyright } from '../../components/Copyright'
-import { Alert } from '@mui/material';
+import { Alert, CircularProgress } from '@mui/material';
 
 export const Login = () => {
     const { signIn } = useAuth()
@@ -87,7 +87,7 @@ export const Login = () => {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            {loading ? <p>Carregando...</p> : null}
+                            {loading ? <CircularProgress size={20} sx={{ color: "secondary.main" }} /> : null}
                             {error && <Alert severity='error'>{"Erro de autenticação"}</Alert>}
                         </Grid>
                     </Grid>

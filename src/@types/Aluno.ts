@@ -3,6 +3,7 @@ import { Treino } from "./Treino";
 import { Usuario } from "./Usuario";
 
 export type Aluno = {
+    id?: string;
     peso: number;
     altura: number;
     idade: number;

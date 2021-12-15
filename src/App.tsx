@@ -8,11 +8,11 @@ import theme from './ui/themes/theme'
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
-        <AuthProvider>
-          <RoutesComponent />
-        </AuthProvider>
-      </BrowserRouter>
+        <BrowserRouter>
+          <AuthProvider>
+            <RoutesComponent />
+          </AuthProvider>
+        </BrowserRouter>
     </ThemeProvider>
   )
 }
