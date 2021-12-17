@@ -20,8 +20,8 @@ export default function FormProfessor({ title }: PropsForms) {
         SetProfessor({
             cref,
             usuario: {
-                email: state.dadosPessoais.email,
-                password
+                password,
+                type: 'professor'
             }
         })
         dispatch({

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -20,6 +19,7 @@ export const Login = () => {
     const [error, setError] = React.useState(false);
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+
 
     function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
         evt.preventDefault()
@@ -39,7 +39,7 @@ export const Login = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
+
             <Box
                 sx={{
                     marginTop: 8,
@@ -72,7 +72,7 @@ export const Login = () => {
                         fullWidth
                         name="password"
                         label="Senha"
-                        type="password"
+                        type='password'
                         id="password"
                         autoComplete="current-password"
                         onChange={(e) => setPassword(e.target.value)}

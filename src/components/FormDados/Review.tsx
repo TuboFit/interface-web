@@ -23,13 +23,15 @@ export default function Review() {
                 })
         }
         return await cadastroProfessor(state.dadosPessoais, state.professor)
-            .then(() => setLoading(false))
+            .then(() => {
+                setLoading(false)
+                navigate("/app/professores")
+            })
             .catch(e => setError(e.message))
             .finally(() => {
                 setLoading(false)
                 navigate("/app/professores")
             })
-
     }
 
     return (

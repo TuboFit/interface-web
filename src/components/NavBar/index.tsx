@@ -21,6 +21,7 @@ const NavBar = () => {
     const navigator = useNavigate()
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [userName] = React.useState<string | null>(localStorage.getItem("@turbofit:userData"))
 
     const handleLogout = () => {
         localStorage.clear()
@@ -119,7 +120,11 @@ const NavBar = () => {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Abrir configurações">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar
+                                    alt={(userName?.split(':')[2][1])?.toUpperCase()}
+                                    src="/static/images/avatar/2.jpg"
+                                    sx={{ bgcolor: 'secondary.main' }}
+                                />
                             </IconButton>
                         </Tooltip>
                         <Menu

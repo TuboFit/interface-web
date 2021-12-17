@@ -11,6 +11,7 @@ export default function ListaProfessores() {
     const [error, setError] = React.useState<boolean>(false);
     const [professores, setProfessores] = React.useState<Professor[]>()
     const handleGetData = async () => {
+        setLoading(true)
         await turbofit_api.get("professores").then(res => {
             setProfessores(res.data)
         }).catch(e => {

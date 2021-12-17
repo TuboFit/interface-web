@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { List, ListItem, ListItemText, Avatar, Typography, ListItemAvatar, Grid } from '@mui/material';
+import { List, ListItem, ListItemText, Avatar, Typography, ListItemAvatar, Grid, Tooltip } from '@mui/material';
 import { ListItensContainer } from './styles';
 import { turbofit_api } from '../../services/turbo_fit_api';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -7,6 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useForm, FormActions } from '../../contexts/FormContext';
 import { EditarAluno } from '../../pages/Alunos/Editar';
 import { EditarProfessor } from '../../pages/Professores/Editar';
+import { Cancel } from '@mui/icons-material';
 type Props = {
     itens: any
     route: string;
@@ -16,6 +17,7 @@ type Props = {
 export const ListItens = ({ itens, route, update }: Props) => {
     const [editAluno, setEditAluno] = React.useState(false);
     const [editProfessor, setEditProfessor] = React.useState(false);
+    // const [modal, setModal] = React.useState(false);
     const { dispatch } = useForm();
     async function handleDelete(id: string, evt: React.MouseEvent<HTMLDivElement>) {
         evt.stopPropagation()
@@ -47,16 +49,45 @@ export const ListItens = ({ itens, route, update }: Props) => {
 
     return (
         <>
+            {
+                editAluno && <Typography
+                    component='div'
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => setEditAluno(false)}
+                >
+                    <Tooltip title="Cancelar">
+                        <Cancel />
+                    </Tooltip>
+                </Typography>
+            }
+            {
+                editProfessor && <Typography
+                    component='div'
+                    sx={{ cursor: 'pointer' }}
+                    onClick={() => setEditProfessor(false)}
+                >
+                    <Tooltip title="Cancelar">
+                        <Cancel />
+                    </Tooltip>
+                </Typography>
+            }
             {editAluno && <EditarAluno />}
             {editProfessor && <EditarProfessor />}
             {!editAluno && !editProfessor &&
                 <ListItensContainer>
                     {!!itens && itens.map((item: any) => (
-                        <List key={item.id} sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        <List
+                            key={item.id}
+                            sx={{ width: '100%', maxWidth: 360, marginTop: 1, borderRadius: 2, bgcolor: 'background.paper' }}
+                        >
                             <Grid item xs={10} sm={12}>
-                                <ListItem alignItems="flex-start" >
+                                <ListItem
+                                    alignItems="flex-start"
+                                    sx={{ cursor: 'pointer' }}
+                                    onClick={() => console.log('modal', item)}
+                                >
                                     <ListItemAvatar>
-                                        <Avatar alt="Nome" sx={{ bgcolor: 'secondary.dark' }} />
+                                        <Avatar alt="Nome" sx={{ bgcolor: 'secondary.dark', color: '#FFF' }} />
                                     </ListItemAvatar>
                                     <ListItemText
                                         primary={item.dados?.nome}
@@ -68,7 +99,7 @@ export const ListItens = ({ itens, route, update }: Props) => {
                                                     variant="body2"
                                                     color="text.primary"
                                                 >
-                                                    {`${item.dados?.email}`}
+                                                    {`${item.usuario.email}`}
                                                 </Typography>
                                             </React.Fragment>
                                         }
@@ -78,20 +109,25 @@ export const ListItens = ({ itens, route, update }: Props) => {
                                         sx={{ cursor: 'pointer' }}
                                         onClick={(evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleDelete(item.id, evt) }}
                                     >
-                                        <DeleteIcon />
+                                        <Tooltip title="Deletar">
+                                            <DeleteIcon />
+                                        </Tooltip>
                                     </Typography>
                                     <Typography
                                         component='div'
                                         sx={{ cursor: 'pointer' }}
                                         onClick={(evt: React.MouseEvent<HTMLDivElement, MouseEvent>) => { handleEdit(item, evt) }}
                                     >
-                                        <EditIcon />
+                                        <Tooltip title="Editar">
+                                            <EditIcon />
+                                        </Tooltip>
                                     </Typography>
                                 </ListItem>
                             </Grid>
                         </List >
                     ))}
-                </ListItensContainer>}
+                </ListItensContainer>
+            }
 
         </>
     );

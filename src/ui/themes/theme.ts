@@ -3,6 +3,10 @@ import { createTheme } from "@material-ui/core";
 
 const theme = createTheme({
   palette: {
+    background: {
+      default: '#FFF',
+      paper: '#FFF'
+    },
     primary: {
       light: "#65798C",
       main: "#181A1E",
@@ -14,8 +18,8 @@ const theme = createTheme({
       dark: "#B32400",
     },
     text: {
-      primary: "#707070",
-      secondary: "#9B9B9B",
+      primary: "#09090a",
+      secondary: "#B32400",
     },
     error: {
       main: "#FC3C00",
@@ -39,7 +43,7 @@ const theme = createTheme({
   },
   shape: {
     borderRadius: 8,
-  },
+  }
 });
 
 export default theme;

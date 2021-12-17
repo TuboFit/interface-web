@@ -13,6 +13,7 @@ export default function FormAlunos() {
     const [altura, setAltura] = React.useState<number>(state.aluno.altura)
     const [obs, setObs] = React.useState<string | undefined>(state.aluno.obs)
     const [genero, setGenero] = React.useState(state.aluno.genero)
+    const [email, setEmail] = React.useState<string | undefined>(state.aluno.usuario?.email)
     const [password, setPassword] = React.useState<string | undefined>(state.aluno.usuario?.password)
 
 
@@ -25,8 +26,9 @@ export default function FormAlunos() {
             obs,
             genero,
             usuario: {
-                email: state.dadosPessoais.email,
-                password
+                email,
+                password,
+                type: 'aluno'
             }
         })
         dispatch({
@@ -72,6 +74,19 @@ export default function FormAlunos() {
                         type="number"
                         value={altura}
                         onChange={(e) => setAltura(e.target.value as unknown as number)}
+                        fullWidth
+                        variant="standard"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="email"
+                        name="email"
+                        label="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         fullWidth
                         variant="standard"
                     />

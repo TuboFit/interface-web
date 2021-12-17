@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@material-ui/core';
+import { CssBaseline } from '@mui/material';
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './contexts/AuthContext'
 import RoutesComponent from './routes';
@@ -8,11 +9,12 @@ import theme from './ui/themes/theme'
 function App() {
   return (
     <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <AuthProvider>
-            <RoutesComponent />
-          </AuthProvider>
-        </BrowserRouter>
+      <CssBaseline />
+      <BrowserRouter>
+        <AuthProvider>
+          <RoutesComponent />
+        </AuthProvider>
+      </BrowserRouter>
     </ThemeProvider>
   )
 }

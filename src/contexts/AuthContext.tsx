@@ -31,9 +31,10 @@ const AuthProvider: React.FC = ({ children }) => {
             email,
             password
         })
-        const { token } = response.data;
+        const { token, useReturns } = response.data;
         setToken(token)
         localStorage.setItem('@turbofit:token', token);
+        localStorage.setItem('@turbofit:userData', JSON.stringify(useReturns))
         turbofit_api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }, [])
 

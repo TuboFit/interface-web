@@ -49,7 +49,7 @@ export const Agendamentos = () => {
             </Container>
             {
                 !loading ?
-                    <Container sx={{ width: "80%" }}>
+                    <Container sx={{ width: "80%" }} >
                         {agendamentos?.quant === 0 ? <p>Sem Agendamentos no momento</p> :
                             <Typography component="div">
 
@@ -61,7 +61,7 @@ export const Agendamentos = () => {
                                                 aria-controls="panel1bh-content"
                                                 id="panel1bh-header"
                                             >
-                                                <Typography sx={{ color: 'text.primary', width: '33%', flexShrink: 0 }}>
+                                                <Typography sx={{ color: 'text.primary', width: '33%', fontWeight: 'bold', flexShrink: 0 }}>
                                                     {item.nome}
                                                 </Typography>
                                                 <Typography sx={{ color: 'text.secondary' }}>{`${frendlyDate(item.data)}`}</Typography>

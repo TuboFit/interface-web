@@ -39,7 +39,6 @@ const initialData: State = {
     dadosPessoais: {
         nome: '',
         cpf: '',
-        email: '',
         telefone: '',
         endereco: {
             logradouro: '',
@@ -59,6 +58,7 @@ const initialData: State = {
         usuario: {
             email: '',
             password: '',
+            type: ''
         }
 
     },
@@ -66,7 +66,8 @@ const initialData: State = {
         cref: '',
         usuario: {
             email: '',
-            password: ''
+            password: '',
+            type: ''
         }
     }
 }

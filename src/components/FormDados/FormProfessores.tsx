@@ -13,6 +13,7 @@ export default function FormProfessor({ title }: PropsForms) {
     const { state, dispatch } = useForm()
     const [professor, SetProfessor] = React.useState<Professor>({} as Professor)
     const [cref, setCref] = React.useState(state.professor.cref);
+    const [email, setEmail] = React.useState<string | undefined>(state.professor.usuario?.email);
     const [password, setPassword] = React.useState<string | undefined>(state.professor.usuario?.password)
 
     function handleProfessor(evt: React.FormEvent<HTMLFormElement>) {
@@ -20,8 +21,9 @@ export default function FormProfessor({ title }: PropsForms) {
         SetProfessor({
             cref,
             usuario: {
-                email: state.dadosPessoais.email,
-                password
+                email,
+                password,
+                type: 'professor'
             }
         })
         dispatch({
@@ -44,6 +46,19 @@ export default function FormProfessor({ title }: PropsForms) {
                         label="CREF"
                         value={cref}
                         onChange={(e) => setCref(e.target.value)}
+                        fullWidth
+                        variant="standard"
+                    />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                    <TextField
+                        required
+                        id="email"
+                        name="email"
+                        label="Email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                         fullWidth
                         variant="standard"
                     />

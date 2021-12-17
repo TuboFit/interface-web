@@ -25,8 +25,8 @@ export default function FormAlunos() {
             obs,
             genero,
             usuario: {
-                email: state.dadosPessoais.email,
-                password
+                password,
+                type: 'aluno'
             }
         })
         dispatch({

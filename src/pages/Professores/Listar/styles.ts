@@ -1,8 +1,10 @@
 import { experimentalStyled as styled } from "@material-ui/core/styles";
 
 export const Container = styled("div")`
-  background-color: ${({ theme }) => theme.palette.grey[50]};
+  margin-top:12px;
+  border-radius:8px;
+  align-items: center;
+  background-color: ${({ theme }) => theme.palette.grey[200]};
   padding: ${({ theme }) => theme.spacing(6)};
   gap: ${({ theme }) => theme.spacing(0.5) + " " + theme.spacing(2)};
-  align-items: center;
 `;

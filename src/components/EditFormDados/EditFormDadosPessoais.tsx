@@ -13,7 +13,6 @@ export default function EditFormDadosPessoais({ title }: PropsForms) {
     const { state, dispatch } = useForm();
     const [formValues, setFormValues] = React.useState<DadosPessoais>({} as DadosPessoais)
     const [nome, setNome] = React.useState<string>(state.dadosPessoais.nome);
-    const [email, setEmail] = React.useState<string>(state.dadosPessoais.email);
     const [telefone, setTelefone] = React.useState<string>(state.dadosPessoais.telefone);
     const [cpf, setCpf] = React.useState<string>(state.dadosPessoais.cpf);
     const [logradouro, setLogradouro] = React.useState<string>(state.dadosPessoais.endereco?.logradouro);
@@ -27,7 +26,6 @@ export default function EditFormDadosPessoais({ title }: PropsForms) {
         setFormValues({
             id: state.dadosPessoais.id,
             nome,
-            email,
             telefone,
             cpf,
             endereco: {
@@ -58,19 +56,6 @@ export default function EditFormDadosPessoais({ title }: PropsForms) {
                         type="text"
                         value={nome}
                         onChange={(e) => setNome(e.target.value)}
-                        fullWidth
-                        variant="standard"
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="email"
-                        name="email"
-                        label="Email"
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
                         fullWidth
                         variant="standard"
                     />
