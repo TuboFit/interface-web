@@ -14,3 +14,10 @@ export const frendlyPhone = (phone: string) => {
 }
 
 export const toDateString = (date: Date) => `${date.getFullYear()}-${zeroPad(date.getMonth() + 1)}-${zeroPad(date.getDate())}`
+
+export const frendlyCPF = (cpf: string | undefined) => {
+    if (cpf) {
+        return (`${cpf.slice(0, 3)}.${cpf.slice(3, 6)}.${cpf.slice(6, 9)} - ${cpf.slice(9, 11)} `)
+    }
+    return
+}

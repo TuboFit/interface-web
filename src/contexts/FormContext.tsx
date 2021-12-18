@@ -49,7 +49,6 @@ const initialData: State = {
         }
     },
     aluno: {
-        id: '',
         altura: 0,
         idade: 0,
         genero: 0,
@@ -80,6 +79,7 @@ export enum FormActions {
     setDadosPessoais,
     setAluno,
     setProfessor,
+    setEditDadosPessoais,
 }
 
 const formReducer = (state: State, action: Action) => {
@@ -87,8 +87,7 @@ const formReducer = (state: State, action: Action) => {
         case FormActions.setCurrentStep:
             return { ...state, currentStep: action.payload }
         case FormActions.setDadosPessoais:
-            state.dadosPessoais.id = action.payload.id;
-            console.log(state.dadosPessoais.id)
+            state.dadosPessoais.id = action.payload.id
             return { ...state, dadosPessoais: action.payload }
         case FormActions.setAluno:
             return { ...state, aluno: action.payload }
@@ -113,9 +112,12 @@ export const FormProvider = ({ children }: FormProviderProps) => {
     }, [])
 
     const editDados = useCallback(async (dados: DadosPessoais) => {
-        await turbofit_api.patch(`dados/${state.dadosPessoais?.id}`, {
+        console.log(dados.id, state.dadosPessoais?.id)
+
+        await turbofit_api.patch(`dados/${state.dadosPessoais?.id} `, {
             ...dados
-        })
+        }).then().catch(e => new Error(e.message))
+
     }, [state.dadosPessoais?.id])
 
     const cadastroProfessor = useCallback(async (dados: DadosPessoais, professor: Professor) => {

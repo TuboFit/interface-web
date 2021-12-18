@@ -7,6 +7,8 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { useForm } from '../../contexts/FormContext';
+import { frendlyCPF } from '../../utils/DataConfig';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -47,42 +49,53 @@ const BootstrapDialogTitle = (props: DialogTitleProps) => {
     );
 };
 
-type PropsCustomizedDialogs = {
-    item: any
-    openModal: boolean
+type Props = {
+    handleCloseDialog: () => void
 }
 
-export default function CustomizedDialogs({ item, openModal }: PropsCustomizedDialogs) {
-    console.log(item)
-    const [open, setOpen] = React.useState(openModal)
-    function handleClose() {
-        setOpen(oldvalue => !oldvalue)
-    }
+export default function CustomizedDialogs({ handleCloseDialog }: Props) {
+    const { state } = useForm()
+    const item = { ...state.professor } as any
     return (
         <div>
             <BootstrapDialog
-                onClose={handleClose}
+                onClose={handleCloseDialog}
                 aria-labelledby="customized-dialog-title"
-                open={open}
+                open
             >
-                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose} >
-                    Modal title
+                <BootstrapDialogTitle id="customized-dialog-title" onClose={handleCloseDialog} >
+                    {item.dados?.nome}
                 </BootstrapDialogTitle>
                 <DialogContent dividers>
                     <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                        dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                        consectetur ac, vestibulum at eros.
+                        {state.professor.cref}
                     </Typography>
                     <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                        Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                        Email: {state.professor.usuario?.email}
                     </Typography>
                     <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                        magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                        ullamcorper nulla non metus auctor fringilla.
+                        CPF: {frendlyCPF(state.professor.dados?.cpf)}
                     </Typography>
+                    <Typography gutterBottom>
+                        Endereco: {state.professor.dados?.endereco.logradouro},  {state.professor.dados?.endereco.numero}, {state.professor.dados?.endereco.bairro} <br />
+                        Cidade: {state.professor.dados?.endereco.cidade}   Estado: {state.professor.dados?.endereco.uf}
+                    </Typography>
+                    {state.professor.usuario?.type === 'aluno' ?
+                        <>
+                            <Typography gutterBottom>
+                                Idade: {item.idade} Peso:{item.peso + 'Kg'} Altura:{item.altura + 'cm'}
+                            </Typography>
+                            <Typography gutterBottom>
+                                IMC: {item.imc.toFixed(1)}
+                            </Typography>
+                            <Typography gutterBottom>
+                                TMB: {item.tmb.toFixed(1)}
+                            </Typography>
+                            <Typography gutterBottom>
+                                Gênero: {item.genero === 1 ? 'Masculino' : 'Feminino'}
+                            </Typography>
+                        </>
+                        : null}
                 </DialogContent>
                 <DialogActions>
                 </DialogActions>

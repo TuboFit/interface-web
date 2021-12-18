@@ -1,24 +1,23 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress, Typography } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import { useForm } from '../../contexts/FormContext';
 import { Button } from '@mui/material';
+import { frendlyCPF } from '../../utils/DataConfig';
 
 export default function Review() {
     const { state, editDados } = useForm();
     const [error, setError] = React.useState('');
+    const [sucess, setSucess] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
-    const navigate = useNavigate();
 
     async function handleSubmitForm() {
         setLoading(true)
         return await editDados(state.dadosPessoais)
-            .then(() => setLoading(false))
+            .then(() => setSucess(true))
             .catch(e => setError(e.message))
             .finally(() => {
                 setLoading(false)
-                navigate("/app/alunos")
             })
     }
 
@@ -30,6 +29,10 @@ export default function Review() {
             <ListItemText primary="Nome" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
                 {state.dadosPessoais.nome}
+            </Typography>
+            <ListItemText primary="CPF" />
+            <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                {frendlyCPF(state.dadosPessoais.cpf)}
             </Typography>
             <ListItemText primary="Endereco" />
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
@@ -50,6 +53,7 @@ export default function Review() {
 
             <Typography component="div" sx={{ marginTop: 2 }}>
                 {error && <Alert variant="filled" severity="error">{error}</Alert>}
+                {sucess && <Alert variant="filled" severity="success">{'Atualizado com sucesso'}</Alert>}
             </Typography>
 
         </React.Fragment>

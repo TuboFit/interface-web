@@ -8,6 +8,7 @@ import { useForm, FormActions } from '../../contexts/FormContext';
 import { EditarAluno } from '../../pages/Alunos/Editar';
 import { EditarProfessor } from '../../pages/Professores/Editar';
 import { Cancel } from '@mui/icons-material';
+import CustomizedDialogs from '../Modal';
 type Props = {
     itens: any
     route: string;
@@ -17,7 +18,7 @@ type Props = {
 export const ListItens = ({ itens, route, update }: Props) => {
     const [editAluno, setEditAluno] = React.useState(false);
     const [editProfessor, setEditProfessor] = React.useState(false);
-    // const [modal, setModal] = React.useState(false);
+    const [modal, setModal] = React.useState(false);
     const { dispatch } = useForm();
     async function handleDelete(id: string, evt: React.MouseEvent<HTMLDivElement>) {
         evt.stopPropagation()
@@ -47,8 +48,21 @@ export const ListItens = ({ itens, route, update }: Props) => {
 
     }
 
+    function handleOpenModal(item: any) {
+        setModal(true)
+        dispatch({
+            type: FormActions.setProfessor,
+            payload: item
+        })
+    }
+
+    function handleCloseModal() {
+        setModal(false)
+    }
+
     return (
         <>
+            {modal && <CustomizedDialogs handleCloseDialog={handleCloseModal} />}
             {
                 editAluno && <Typography
                     component='div'
@@ -84,7 +98,7 @@ export const ListItens = ({ itens, route, update }: Props) => {
                                 <ListItem
                                     alignItems="flex-start"
                                     sx={{ cursor: 'pointer' }}
-                                    onClick={() => console.log('modal', item)}
+                                    onClick={() => handleOpenModal(item)}
                                 >
                                     <ListItemAvatar>
                                         <Avatar alt="Nome" sx={{ bgcolor: 'secondary.dark', color: '#FFF' }} />
