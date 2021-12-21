@@ -3,7 +3,9 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import { InputLabel, MenuItem, Select } from '@mui/material';
 import { FormActions, useForm } from '../../contexts/FormContext';
+import { turbofit_api } from '../../services/turbo_fit_api'
 import { Aluno } from '../../@types/Aluno';
+import { Treino } from '../../@types/Treino';
 
 export default function FormAlunos() {
     const { state, dispatch } = useForm();
@@ -15,10 +17,25 @@ export default function FormAlunos() {
     const [genero, setGenero] = React.useState(state.aluno.genero)
     const [email, setEmail] = React.useState<string | undefined>(state.aluno.usuario?.email)
     const [password, setPassword] = React.useState<string | undefined>(state.aluno.usuario?.password)
+    const [treino, setTreino] = React.useState<string>('');
 
+
+    const [getTreinos, setGetTreinos] = React.useState<Treino[]>([]);
+
+    async function handleGetTreinos() {
+        const { data } = await turbofit_api.get('treinos')
+        if (data) {
+            setGetTreinos(data)
+        }
+    }
+
+    React.useEffect(() => {
+        handleGetTreinos();
+    }, [])
 
     function handleSubmitAlunos(evt: React.FormEvent<HTMLFormElement>) {
         evt.preventDefault();
+        console.log(treino)
         setAluno({
             idade,
             peso,
@@ -29,7 +46,8 @@ export default function FormAlunos() {
                 email,
                 password,
                 type: 'aluno'
-            }
+            },
+            treinos: [JSON.parse(treino)]
         })
         dispatch({
             type: FormActions.setAluno,
@@ -137,13 +155,16 @@ export default function FormAlunos() {
                         labelId='treino-label'
                         id="treinos"
                         name="treinos"
-                        value={""}
+                        value={treino}
                         label="Treino"
-                        onChange={() => { }}
+                        onChange={(e) => setTreino(e.target.value)}
                         fullWidth
                     >
-                        <MenuItem value={0}>{""}</MenuItem>
-                        <MenuItem value={1}>{""}</MenuItem>
+                        {
+                            getTreinos.map(item =>
+                                <MenuItem key={item.id} value={JSON.stringify(item, null)}>{item.crefProfessor}</MenuItem>
+                            )
+                        }
                     </Select>
                 </Grid>
             </Grid>

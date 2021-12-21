@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Alert, CircularProgress, Typography } from '@mui/material';
 import ListItemText from '@mui/material/ListItemText';
 import { useForm } from '../../contexts/FormContext';
@@ -11,7 +10,6 @@ export default function Review() {
     const [error, setError] = React.useState('');
     const [sucess, setSucess] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
-    const navigate = useNavigate();
 
     async function handleSubmitForm() {
         setLoading(true)
@@ -26,11 +24,11 @@ export default function Review() {
         return await cadastroProfessor(state.dadosPessoais, state.professor)
             .then(() => {
                 setSucess(true)
+                window.location.reload()
             })
             .catch(e => setError(e.message))
             .finally(() => {
                 setLoading(false)
-                navigate("/app/professores")
             })
     }
 
@@ -89,7 +87,7 @@ export default function Review() {
 
             <Typography component="div" sx={{ marginTop: 2 }}>
                 {error && <Alert variant="filled" severity="error">{error}</Alert>}
-                {sucess && <Alert variant="filled" severity="success">{'Atualizado com sucesso'}</Alert>}
+                {sucess && <Alert variant="filled" severity="success">{'Cadastrado com sucesso'}</Alert>}
             </Typography>
 
         </React.Fragment>

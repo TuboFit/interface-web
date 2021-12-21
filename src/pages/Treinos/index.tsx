@@ -11,7 +11,7 @@ export const Treinos = () => {
     return (
         <>
             <NavBar />
-            <Container >
+            <Container sx={{ color: 'background.paper' }}>
                 <h1>Treinos</h1>
                 <Fab color="primary" aria-label="add" onClick={() => setCadastro((oldValue) => !oldValue)}>
                     {cadastro ? <ArrowBack sx={{ color: 'secondary.main' }} /> : <AddIcon sx={{ color: 'secondary.main' }} />}

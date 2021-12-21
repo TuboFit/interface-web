@@ -97,7 +97,7 @@ export const ListItens = ({ itens, route, update }: Props) => {
                             <Grid item xs={10} sm={12}>
                                 <ListItem
                                     alignItems="flex-start"
-                                    sx={{ cursor: 'pointer' }}
+                                    sx={{ cursor: 'pointer', color: "#000" }}
                                     onClick={() => handleOpenModal(item)}
                                 >
                                     <ListItemAvatar>

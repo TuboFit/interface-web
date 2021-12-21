@@ -16,7 +16,7 @@ export const QRCodeContainer = () => {
     return (
         <React.Fragment>
             <Typography component="div" align="center" >
-                <TitleQRCode>
+                <TitleQRCode sx={{ color: "#FFF" }}>
                     Agendamento de aulas
                 </TitleQRCode>
                 <Typography

@@ -44,7 +44,7 @@ export const Agendamentos = () => {
     return (
         <>
             <NavBar />
-            <Container>
+            <Container sx={{ color: 'background.paper' }}>
                 <h1>Agendamentos</h1>
             </Container>
             {
