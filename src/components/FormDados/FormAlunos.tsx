@@ -162,7 +162,7 @@ export default function FormAlunos() {
                     >
                         {
                             getTreinos.map(item =>
-                                <MenuItem key={item.id} value={JSON.stringify(item, null)}>{item.crefProfessor}</MenuItem>
+                                <MenuItem key={item.id} value={JSON.stringify(item, null)}>{item.nome}</MenuItem>
                             )
                         }
                     </Select>

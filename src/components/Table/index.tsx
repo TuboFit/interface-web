@@ -33,7 +33,7 @@ function Row(props: { row: Treino }) {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.crefProfessor}
+                    {row.nome}
                 </TableCell>
                 <TableCell align="center">{row.grupMuscular}</TableCell>
                 <TableCell align="center">{row.nivel}</TableCell>
@@ -45,6 +45,9 @@ function Row(props: { row: Treino }) {
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
                                 Exercicios
+                            </Typography>
+                            <Typography variant="subtitle2" gutterBottom component="div">
+                                {`CREF do Professor: ${row.crefProfessor}`}
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
@@ -60,7 +63,7 @@ function Row(props: { row: Treino }) {
                                     {row.exercicios?.map((exercicio) => (
                                         <TableRow key={exercicio.id}>
                                             <TableCell component="th" scope="row">
-                                                {row.dia}
+                                                {exercicio.dia === 'all' ? 'Todos os dias' : exercicio.dia}
                                             </TableCell>
                                             <TableCell align='center'>{exercicio.nome}</TableCell>
                                             <TableCell align='center'>{exercicio.grupMuscular}</TableCell>
@@ -91,7 +94,7 @@ export default function CollapsibleTable({ itens }: TableProps) {
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell>CREF- Professor</TableCell>
+                        <TableCell>Nome Identicador</TableCell>
                         <TableCell align="center">Grupo Muscular</TableCell>
                         <TableCell align="center">Nível</TableCell>
                         <TableCell align="center">Qantidade de Exercicios</TableCell>

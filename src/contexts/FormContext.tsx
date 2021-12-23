@@ -25,8 +25,9 @@ type ContextType = {
     state: State;
     dispatch: (action: Action) => void
     cadastroAluno: (dadosPessoais: DadosPessoais, aluno: Aluno) => Promise<void>
-    editDados: (dadosPessoais: DadosPessoais) => Promise<void>
+    editDadosAlunos: (dadosPessoais: DadosPessoais, aluno: Aluno) => Promise<void>
     cadastroProfessor: (dadosPessoais: DadosPessoais, professor: Professor) => Promise<void>
+    editDadosProfessor: (dadosPessoais: DadosPessoais, professor: Professor) => Promise<void>
 }
 
 type FormProviderProps = {
@@ -78,8 +79,7 @@ export enum FormActions {
     setCurrentStep,
     setDadosPessoais,
     setAluno,
-    setProfessor,
-    setEditDadosPessoais,
+    setProfessor
 }
 
 const formReducer = (state: State, action: Action) => {
@@ -87,11 +87,12 @@ const formReducer = (state: State, action: Action) => {
         case FormActions.setCurrentStep:
             return { ...state, currentStep: action.payload }
         case FormActions.setDadosPessoais:
-            state.dadosPessoais.id = action.payload.id
             return { ...state, dadosPessoais: action.payload }
         case FormActions.setAluno:
+            state.aluno.id = action.payload.id
             return { ...state, aluno: action.payload }
         case FormActions.setProfessor:
+            state.aluno.id = action.payload.id
             return { ...state, professor: action.payload }
         default:
             return state
@@ -111,14 +112,27 @@ export const FormProvider = ({ children }: FormProviderProps) => {
         })
     }, [])
 
-    const editDados = useCallback(async (dados: DadosPessoais) => {
-        console.log(dados.id, state.dadosPessoais?.id)
+    const editDadosAlunos = useCallback(async (dados: DadosPessoais, aluno: Aluno) => {
+        await turbofit_api.patch(`alunos/${state.aluno.id} `, {
+            ...aluno,
+            dados: {
+                ...dados
+            }
+        })
+            .then()
+            .catch(e => new Error(e.message))
+        // eslint-disable-next-line 
+    }, [])
 
-        await turbofit_api.patch(`dados/${state.dadosPessoais?.id} `, {
-            ...dados
+    const editDadosProfessor = useCallback(async (dados: DadosPessoais, professor: Professor) => {
+        await turbofit_api.patch(`professores/${state.professor.id} `, {
+            ...professor,
+            dados: {
+                ...dados
+            }
         }).then().catch(e => new Error(e.message))
-
-    }, [state.dadosPessoais?.id])
+        // eslint-disable-next-line 
+    }, [])
 
     const cadastroProfessor = useCallback(async (dados: DadosPessoais, professor: Professor) => {
         await turbofit_api.post('professores', {
@@ -134,9 +148,9 @@ export const FormProvider = ({ children }: FormProviderProps) => {
             state,
             dispatch,
             cadastroAluno,
-            editDados,
-            cadastroProfessor
-
+            editDadosAlunos,
+            cadastroProfessor,
+            editDadosProfessor
         }}>
             {children}
         </FormContext.Provider>

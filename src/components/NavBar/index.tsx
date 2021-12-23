@@ -43,7 +43,6 @@ const NavBar = () => {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
-        handleLogout()
     };
 
     return (

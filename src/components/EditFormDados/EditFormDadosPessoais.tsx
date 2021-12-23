@@ -20,11 +20,9 @@ export default function EditFormDadosPessoais({ title }: PropsForms) {
     const [numero, setNumero] = React.useState<string>(state.dadosPessoais.endereco?.numero);
     const [cidade, setCidade] = React.useState<string>(state.dadosPessoais.endereco?.cidade);
     const [uf, setUf] = React.useState<string>(state.dadosPessoais.endereco?.uf);
-    console.log(state.dadosPessoais.id)
     function handleSubmitDados(evt: React.FormEvent<HTMLFormElement>) {
         evt.preventDefault();
         setFormValues({
-            id: state.dadosPessoais.id,
             nome,
             telefone,
             cpf,

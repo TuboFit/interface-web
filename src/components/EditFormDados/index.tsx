@@ -9,6 +9,8 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import FormDadosPessoais from './EditFormDadosPessoais';
+import FormAlunos from './FormAlunos';
+import FormProfessores from './FormProfessores';
 import Review from './Review';
 import { Copyright } from '../Copyright';
 
@@ -18,13 +20,15 @@ type PropsTypeCadastro = {
 }
 
 
-const steps = ['Dados Pessoais', 'Confirmação'];
+const steps = ['Dados Pessoais', 'Dados do usuario', 'Confirmação'];
 
 function getStepContent(step: number, alunos: boolean, title: string) {
     switch (step) {
         case 0:
             return <FormDadosPessoais title={title} />;
         case 1:
+            return (alunos === true ? <FormAlunos /> : < FormProfessores title={title} />);
+        case 2:
             return <Review />
         default: {
             throw new Error('Passo inválido');
@@ -48,7 +52,7 @@ export default function CheckoutForm({ title, aluno }: PropsTypeCadastro) {
             <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
                 <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                     <Typography component="h1" variant="h4" align="center">
-                        Atualizar dados
+                        Cadastro
                     </Typography>
                     <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
                         {steps.map((label) => (
@@ -61,7 +65,7 @@ export default function CheckoutForm({ title, aluno }: PropsTypeCadastro) {
                         {activeStep === steps.length ? (
                             <React.Fragment>
                                 <Typography variant="h5" gutterBottom>
-                                    Atualização realizada com sucesso!.
+                                    Cadastro relizado com sucesso!.
                                 </Typography>
                             </React.Fragment>
                         ) : (

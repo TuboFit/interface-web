@@ -6,15 +6,26 @@ import { Button } from '@mui/material';
 import { frendlyCPF } from '../../utils/DataConfig';
 
 export default function Review() {
-    const { state, editDados } = useForm();
+    const { state, editDadosAlunos, editDadosProfessor } = useForm();
     const [error, setError] = React.useState('');
     const [sucess, setSucess] = React.useState(false);
     const [loading, setLoading] = React.useState(false);
 
     async function handleSubmitForm() {
         setLoading(true)
-        return await editDados(state.dadosPessoais)
-            .then(() => setSucess(true))
+        if (!state.professor.cref) {
+            return await editDadosAlunos(state.dadosPessoais, state.aluno)
+                .then(() => setSucess(true))
+                .catch(e => setError(e.message))
+                .finally(() => {
+                    setLoading(false)
+                })
+        }
+        return await editDadosProfessor(state.dadosPessoais, state.professor)
+            .then(() => {
+                setSucess(true)
+                window.location.reload()
+            })
             .catch(e => setError(e.message))
             .finally(() => {
                 setLoading(false)

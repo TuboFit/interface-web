@@ -31,14 +31,14 @@ export const ListItens = ({ itens, route, update }: Props) => {
         evt.stopPropagation()
         if (!item.cref) {
             dispatch({
-                type: FormActions.setDadosPessoais,
-                payload: item.dados
+                type: FormActions.setAluno,
+                payload: item
             })
             setEditAluno(true)
         } else if (item.cref) {
             dispatch({
-                type: FormActions.setDadosPessoais,
-                payload: item.dados
+                type: FormActions.setProfessor,
+                payload: item
             })
             setEditProfessor(true)
         } else {

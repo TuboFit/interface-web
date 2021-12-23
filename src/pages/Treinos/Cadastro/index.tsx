@@ -13,11 +13,13 @@ export const CadastroTreino = () => {
     const [sucess, setSucess] = useState(false)
     const [error, setError] = useState('')
     const [cref, setCref] = useState<string>('')
-    const [dia, setDia] = useState<string>('')
+    const [nome, setNome] = useState<string>('')
     const [nivel, setNivel] = useState<string>('')
     const [nomeExercicio, setNomeExercicio] = useState('')
+    const [dia, setDia] = useState<string>('')
     const [numeroRepeticoes, setNumeroRepeticoes] = useState('')
-    const [grupMuscular, setGrupMuscular] = useState('')
+    const [grupMuscular, setGrupMuscular] = useState('all')
+    const [grupExercicio, setGrupExercicio] = useState('')
     const [obs, setObs] = useState('')
     const [carga, setCarga] = useState('')
     const [treino, setTreino] = useState<Treino>()
@@ -29,6 +31,7 @@ export const CadastroTreino = () => {
             setExercicios([{
                 nome: nomeExercicio,
                 grupMuscular,
+                dia,
                 numRepeticoes: numeroRepeticoes,
                 carga,
                 obs
@@ -37,6 +40,7 @@ export const CadastroTreino = () => {
             const oldData = exercicios
             oldData.push({
                 nome: nomeExercicio,
+                dia,
                 grupMuscular,
                 numRepeticoes: numeroRepeticoes,
                 carga,
@@ -59,15 +63,13 @@ export const CadastroTreino = () => {
         setExercicios([...exercicios])
     };
 
-
-
     function handleTreino() {
         setLoading(true)
         setTreino({
             crefProfessor: cref,
-            dia,
+            nome,
             nivel,
-            grupMuscular,
+            grupMuscular: grupExercicio,
             exercicios: exercicios
         })
         if (treino) {
@@ -84,8 +86,8 @@ export const CadastroTreino = () => {
             <Grid sx={{ flexGrow: 1 }} container spacing={3} component="form">
                 <Grid item xs={12}>
                     <Grid container justifyContent="center" spacing={2}>
-                        <Grid item>
-                            <Paper variant="outlined" square sx={{ height: '80vh', width: 380, borderRadius: 2, padding: 2 }} >
+                        <Paper variant="outlined" square sx={{ height: '200vh', width: 600, borderRadius: 2, padding: 2 }} >
+                            <Grid item>
                                 <p>Dados de Treino</p>
                                 <Grid item xs={10} sx={{ padding: 2 }}>
                                     <TextField
@@ -102,13 +104,12 @@ export const CadastroTreino = () => {
                                 </Grid>
                                 <Grid item xs={10} sx={{ padding: 2 }}>
                                     <TextField
-                                        required
-                                        id="dia"
-                                        name="dia"
-                                        label="Dia"
+                                        id="grupMuscular"
+                                        name="grupMuscular"
+                                        label="Grupo Muscular"
                                         type="text"
-                                        value={dia}
-                                        onChange={(e) => setDia(e.target.value)}
+                                        value={grupMuscular}
+                                        onChange={(e) => setGrupMuscular(e.target.value)}
                                         fullWidth
                                         variant="standard"
                                     />
@@ -116,12 +117,12 @@ export const CadastroTreino = () => {
                                 <Grid item xs={10} sx={{ padding: 2 }}>
                                     <TextField
                                         required
-                                        id="grupMuscular"
-                                        name="grupMuscular"
-                                        label="Grupo Muscular"
+                                        id="nome"
+                                        name="nomeTreino"
+                                        label="Nome Identificador"
                                         type="text"
-                                        value={grupMuscular}
-                                        onChange={(e) => setGrupMuscular(e.target.value)}
+                                        value={nome}
+                                        onChange={(e) => setNome(e.target.value)}
                                         fullWidth
                                         variant="standard"
                                     />
@@ -142,16 +143,24 @@ export const CadastroTreino = () => {
                                         <MenuItem value={'avancado'} onClick={() => setNivel('avancado')}>Avançado</MenuItem>
                                     </Select>
                                 </Grid>
-                                <Typography component="div" sx={{ marginTop: 2 }}>
-                                    {error && <Alert variant="filled" severity="error">{error}</Alert>}
-                                    {sucess && <Alert variant="filled" severity="success">{'Cadastrado com sucesso'}</Alert>}
-                                </Typography>
-                            </Paper>
-                        </Grid>
+                            </Grid>
 
-                        <Grid item>
-                            <Paper variant="outlined" square sx={{ height: '80vh', width: 380, borderRadius: 2, padding: 3 }} >
+                            <Grid item>
+
                                 <p>Dados de Exercicios</p>
+                                <Grid item xs={10} sx={{ padding: 2 }}>
+                                    <TextField
+                                        required
+                                        id="dia"
+                                        name="dia"
+                                        label="Dia"
+                                        type="text"
+                                        value={dia}
+                                        onChange={(e) => setDia(e.target.value)}
+                                        fullWidth
+                                        variant="standard"
+                                    />
+                                </Grid>
                                 <Grid item xs={10} sx={{ padding: 2 }}>
                                     <TextField
                                         required
@@ -161,6 +170,18 @@ export const CadastroTreino = () => {
                                         type="text"
                                         value={nomeExercicio}
                                         onChange={(e) => setNomeExercicio(e.target.value)}
+                                        fullWidth
+                                        variant="standard"
+                                    />
+                                </Grid>
+                                <Grid item xs={10} sx={{ padding: 2 }}>
+                                    <TextField
+                                        id="grupMuscularexer"
+                                        name="grupMuscularexer"
+                                        label="Grupo Muscular"
+                                        type="text"
+                                        value={grupExercicio}
+                                        onChange={(e) => setGrupExercicio(e.target.value)}
                                         fullWidth
                                         variant="standard"
                                     />
@@ -191,9 +212,8 @@ export const CadastroTreino = () => {
                                         variant="standard"
                                     />
                                 </Grid>
-                                <Grid item xs={12} sx={{ padding: 2 }}>
+                                <Grid item xs={10} sx={{ padding: 2 }}>
                                     <TextField
-                                        required
                                         id="obs"
                                         name="obs"
                                         label="Observações"
@@ -218,16 +238,25 @@ export const CadastroTreino = () => {
                                         variant="outlined"
                                     />
                                 )}
-                            </Paper>
-                            <Button
-                                variant="contained"
-                                onClick={handleTreino}
-                                sx={{ mt: 3, ml: 1 }}
-                            >
-                                {'Enviar'}
-                                {loading && <CircularProgress size={20} sx={{ marginLeft: 1, color: "secondary.main" }} />}
-                            </Button>
-                        </Grid>
+                                <Typography component="div" sx={{ marginTop: 2 }}>
+                                    {error && <Alert variant="filled" severity="error">{error}</Alert>}
+                                    {sucess && <Alert variant="filled" severity="success">{'Cadastrado com sucesso'}</Alert>}
+                                </Typography>
+                                <Grid item sx={{ marginLeft: '80%' }}>
+                                    <Button
+                                        variant="contained"
+                                        onClick={handleTreino}
+                                        sx={{
+                                            mt: 3,
+                                            ml: 1,
+                                        }}
+                                    >
+                                        {'Enviar'}
+                                        {loading && <CircularProgress size={20} sx={{ marginLeft: 1, color: "secondary.main" }} />}
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Paper>
                     </Grid>
                 </Grid>
             </Grid >
